@@ -40,7 +40,7 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/itzC9
 ```
 Creating UI Library Window
 ```lua
-local Window = Library.CreateLib("TITLE", "DarkTheme")
+local Window = Library.MakeLib("TITLE", "DarkTheme")
 ```
 Themes:
 ```
@@ -63,18 +63,19 @@ Themes:
 ```
 Creating Tabs
 ```lua
-local Tab = Window:NewTab("TabName")
+local Tab = Window:MakeTab("TabName")
 ```
 Creating Section
 ```lua
-local Section = Tab:NewSection("Section Name")
+local Section = Tab:AddSection("Section Name")
 ```
 Update Section
 ```lua
 Section:UpdateSection("Section New Title")
 ```
 Creating Labels
-Section:NewLabel("LabelText")
+```lua
+Section:AddLabel("LabelText")
 ```
 Update Label
 ```lua
@@ -82,7 +83,7 @@ label:UpdateLabel("New Text")
 ```
 Creating Buttons
 ```lua
-Section:NewButton("ButtonText", "ButtonInfo", function()
+Section:AddButton("ButtonText", "ButtonInfo", function()
     print("Clicked")
 end)
 ```
@@ -93,7 +94,7 @@ button:UpdateButton("New Text")
 ```
 Creating Toggles
 ```lua
-Section:NewToggle("ToggleText", "ToggleInfo", function(state)
+Section:AddToggle("ToggleText", "ToggleInfo", function(state)
     if state then
         print("Toggle On")
     else
@@ -119,13 +120,13 @@ end)
 ```
 Creating Sliders
 ```lua
-Section:NewSlider("SliderText", "SliderInfo", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+Section:AddSlider("SliderText", "SliderInfo", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
 end)
 ```
 Creating Textboxes
 ```lua
-Section:NewTextBox("TextboxText", "TextboxInfo", function(txt)
+Section:AddTextBox("TextboxText", "TextboxInfo", function(txt)
 	print(txt)
 end)
 ```
@@ -137,13 +138,13 @@ end)
 ```
 Toggling UI with Keybinds
 ```lua
-Section:NewKeybind("KeybindText", "KeybindInfo", Enum.KeyCode.F, function()
+Section:AddKeybind("KeybindText", "KeybindInfo", Enum.KeyCode.F, function()
 	Library:ToggleUI()
 end)
 ```
 Creating Dropdowns
 ```lua
-Section:NewDropdown("DropdownText", "DropdownInf", {"Option 1", "Option 2", "Option 3"}, function(currentOption)
+Section:AddDropdown("DropdownText", "DropdownInf", {"Option 1", "Option 2", "Option 3"}, function(currentOption)
     print(currentOption)
 end)
 ```
@@ -160,13 +161,13 @@ local newList = {
 local dropdown = Section:NewDropdown("Dropdown","Info", oldList, function()
 
 end)
-Section:NewButton("Update Dropdown", "Refreshes Dropdown", function()
+Section:AddButton("Update Dropdown", "Refreshes Dropdown", function()
   dropdown:Refresh(newList)
 end)
 ```
 Creating Color Pickers
 ```lua
-Section:NewColorPicker("Color Text", "Color Info", Color3.fromRGB(0,0,0), function(color)
+Section:AddColorPicker("Color Text", "Color Info", Color3.fromRGB(0,0,0), function(color)
     print(color)
     -- Second argument is the default color
 end)
@@ -186,7 +187,7 @@ local colors = {
 Applying it: Change your window code little bit.
 
 ```lua
-local Window = Library.CreateLib("TITLE", colors)
+local Window = Library.MakeLib("TITLE", colors)
 ```
 Want to add fully customizable UI?
 Add this code in your section. This will create color pickers.
