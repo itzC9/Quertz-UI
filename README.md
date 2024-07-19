@@ -12,7 +12,7 @@ All of the latest updates may or can be found in here.
 
 Alert:
 All of those who gives template of Kavo is not a part of KavoTeam. big scams. please beware of using them because it may have a logger. this is the official Trinity_Kavo Library.
-You may use this Trinity_Kabo Ui Library because original was almost patched.
+You may use this Trinity_Kavo Ui Library because original Kavo was almost patched.
 
 Added:
 ```
