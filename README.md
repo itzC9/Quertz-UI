@@ -36,7 +36,7 @@ And Other Elements (exc tabs)
 ```
 Getting Loadstring
 ```lua
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/itzC9/Trinx-Kavo-UI/main/source.lua"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/itzC9/Trinx-Kavo-UI/main/main/source.lua"))()
 ```
 Creating UI Library Window
 ```lua
