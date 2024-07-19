@@ -15,6 +15,7 @@ All of those who gives template of Kavo is not a part of KavoTeam. big scams. pl
 You may use this Trinity_Kabo Ui Library because original was almost patched.
 
 Added:
+```
 Section Update Functions
 New Themes:
    Mystic
@@ -25,7 +26,6 @@ New Themes:
    Moon
    Sunrise
    Kali
-
 New Component:
    Label
 
@@ -33,7 +33,7 @@ Rich Text Support For:
 UI Title,
 Sections,
 And Other Elements (exc tabs)
-
+```
 Getting Loadstring
 ```lua
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/itzC9/Trinx-Kavo-UI/main/source.lua"))()
