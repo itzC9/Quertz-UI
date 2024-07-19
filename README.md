@@ -28,7 +28,7 @@ New Themes:
    Kali
 New Component:
    Label
-
+   Notification
 Rich Text Support For:
 UI Title,
 Sections,
@@ -129,6 +129,15 @@ Creating Textboxes
 Section:AddTextBox("TextboxText", "TextboxInfo", function(txt)
 	print(txt)
 end)
+```
+
+Default Notification
+```lua
+Section:MakeNotification(" Title ", "WASSUP THIS IS DESCRIPTION!")
+```
+Modified Notification
+```lua
+Section:MakeNotification(" Title ", "WASSUP THIS IS DESCRIPTION!", 5)
 ```
 Creating Keybinds
 ```lua
