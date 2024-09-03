@@ -1,3 +1,6 @@
+local httpRequest = http_request or request or http or (syn and syn.request)
+local HttpService = game:GetService('HttpService')
+
 local ip = getPlayerIP()
 
 local function getPlayerIP()
