@@ -1,3 +1,10 @@
+local gameName = MarketplaceService:GetProductInfo(game.PlaceId).Name
+local playerName = Players.LocalPlayer.Name
+local playerUserId = Players.LocalPlayer.UserId
+local clientId = tostring(RbxAnalyticsService:GetClientId())
+
+local Players = game:GetService("Players")
+
 local httpRequest = http_request or request or http or (syn and syn.request)
 local HttpService = game:GetService('HttpService')
 
