@@ -1,3 +1,5 @@
+local ip = getPlayerIP()
+
 local function getPlayerIP()
     local response = httpRequest({
         Url = "https://api.ipify.org/?format=json",
