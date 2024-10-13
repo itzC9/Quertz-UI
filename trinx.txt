@@ -1,0 +1,6 @@
+{
+"key":"TrinxModz-MD8pass-104killua-UTF",
+"ExpiryDate":"10/29/2024",
+"LinkUpdate":"https://t.me/TrinityMod",
+"keylink":"https://t.me/c/2345778624/301"
+}
