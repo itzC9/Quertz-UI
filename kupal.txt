@@ -1,6 +1,0 @@
-{
-"key":"KupalModz-MD5pass-03killua",
-"ExpiryDate":"10/29/2024",
-"LinkUpdate":"https://t.me/KupalModz/84/85",
-"keylink":"https://t.me/KupalModz/89/90"
-}
