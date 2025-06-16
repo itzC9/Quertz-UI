@@ -50,7 +50,7 @@ All of the latest updates may or can be found in here.
 
 Getting Loadstring
 ```lua
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/itzC9/Trinx-Kavo-UI/main/tQuertz.lua"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/itzC9/Quertz-UI/main/Quertz.lua"))()
 ```
 Creating UI Library Window
 ```lua
