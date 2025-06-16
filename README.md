@@ -8,12 +8,12 @@
 
 ***⚡ Powered by GitHub***
 
-# 📂 Documentation
+# 📂 Documentation:
 
-# 🗃️Updates:
+# 🗃️Updates-:
 All of the latest updates may or can be found in here.
 
-# 🚨 Important:
+# 🚨 Important-:
 ***All of those who gives template of Kavo is not a part of KavoTeam!***
 ***they are big scams! please beware of using them because it may have a logger.***
 ***this is the official Quertz x Kavo UI Library.***
