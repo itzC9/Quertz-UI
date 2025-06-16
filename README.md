@@ -20,9 +20,9 @@ All of the latest updates may or can be found in here.
 ***You may use this Quertz-UI Library because original Kavo was Discontinued.***
 
 # ***Latest Added:***
-```
 # Section Update Functions
 ***New Themes:***
+```
 - Mystic [New]
 - Sunset [New]
 - Forest [New]
@@ -32,17 +32,22 @@ All of the latest updates may or can be found in here.
 - Sunrise [New]
 - Kali [New]
 - Recommend More (@itzC9#0000)
+```
 
 ***New Component:***
+```
 - Label
 - Notification
 - recommend more (discord.gg/QuertzClient)
+```
 
 ***Rich Text Support For:***
+```
 - UI Title,
 - Sections,
 - And Other Elements (exc tabs)
 ```
+
 Getting Loadstring
 ```lua
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/itzC9/Trinx-Kavo-UI/main/tQuertz.lua"))()
