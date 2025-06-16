@@ -5,7 +5,7 @@ local LocalPlayer = game:GetService("Players").LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local HttpService = game:GetService("HttpService")
 
-local TrinityLib = {
+local QuertzLib = {
 	Elements = {},
 	ThemeObjects = {},
 	Connections = {},
@@ -33,7 +33,7 @@ local Success, Response = pcall(function()
 end)
 
 if not Success then
-	warn("\nTrinity Library - Failed to load Feather Icons. Error code: " .. Response .. "\n")
+	warn("\nQuertz Library - Failed to load Feather Icons. Error code: " .. Response .. "\n")
 end	
 
 local function GetIcon(IconName)
@@ -44,53 +44,53 @@ local function GetIcon(IconName)
 	end
 end   
 
-local Trinity = Instance.new("ScreenGui")
-Trinity.Name = "Trinity"
+local Quertz = Instance.new("ScreenGui")
+Quertz.Name = "Quertz"
 if syn then
-	syn.protect_gui(Trinity)
-	Trinity.Parent = game.CoreGui
+	syn.protect_gui(Quertz)
+	Quertz.Parent = game.CoreGui
 else
-	Trinity.Parent = gethui() or game.CoreGui
+	Quertz.Parent = gethui() or game.CoreGui
 end
 
 if gethui then
 	for _, Interface in ipairs(gethui():GetChildren()) do
-		if Interface.Name == Trinity.Name and Interface ~= Trinity then
+		if Interface.Name == Quertz.Name and Interface ~= Quertz then
 			Interface:Destroy()
 		end
 	end
 else
 	for _, Interface in ipairs(game.CoreGui:GetChildren()) do
-		if Interface.Name == Trinity.Name and Interface ~= Trinity then
+		if Interface.Name == Quertz.Name and Interface ~= Quertz then
 			Interface:Destroy()
 		end
 	end
 end
 
-function TrinityLib:IsRunning()
+function QuertzLib:IsRunning()
 	if gethui then
-		return Trinity.Parent == gethui()
+		return Quertz.Parent == gethui()
 	else
-		return Trinity.Parent == game:GetService("CoreGui")
+		return Quertz.Parent == game:GetService("CoreGui")
 	end
 
 end
 
 local function AddConnection(Signal, Function)
-	if (not TrinityLib:IsRunning()) then
+	if (not QuertzLib:IsRunning()) then
 		return
 	end
 	local SignalConnect = Signal:Connect(Function)
-	table.insert(TrinityLib.Connections, SignalConnect)
+	table.insert(QuertzLib.Connections, SignalConnect)
 	return SignalConnect
 end
 
 task.spawn(function()
-	while (TrinityLib:IsRunning()) do
+	while (QuertzLib:IsRunning()) do
 		wait()
 	end
 
-	for _, Connection in next, TrinityLib.Connections do
+	for _, Connection in next, QuertzLib.Connections do
 		Connection:Disconnect()
 	end
 end)
@@ -137,13 +137,13 @@ local function Create(Name, Properties, Children)
 end
 
 local function CreateElement(ElementName, ElementFunction)
-	TrinityLib.Elements[ElementName] = function(...)
+	QuertzLib.Elements[ElementName] = function(...)
 		return ElementFunction(...)
 	end
 end
 
 local function MakeElement(ElementName, ...)
-	local NewElement = TrinityLib.Elements[ElementName](...)
+	local NewElement = QuertzLib.Elements[ElementName](...)
 	return NewElement
 end
 
@@ -186,18 +186,18 @@ local function ReturnProperty(Object)
 end
 
 local function AddThemeObject(Object, Type)
-	if not TrinityLib.ThemeObjects[Type] then
-		TrinityLib.ThemeObjects[Type] = {}
+	if not QuertzLib.ThemeObjects[Type] then
+		QuertzLib.ThemeObjects[Type] = {}
 	end    
-	table.insert(TrinityLib.ThemeObjects[Type], Object)
-	Object[ReturnProperty(Object)] = TrinityLib.Themes[TrinityLib.SelectedTheme][Type]
+	table.insert(QuertzLib.ThemeObjects[Type], Object)
+	Object[ReturnProperty(Object)] = QuertzLib.Themes[QuertzLib.SelectedTheme][Type]
 	return Object
 end    
 
 local function SetTheme()
-	for Name, Type in pairs(TrinityLib.ThemeObjects) do
+	for Name, Type in pairs(QuertzLib.ThemeObjects) do
 		for _, Object in pairs(Type) do
-			Object[ReturnProperty(Object)] = TrinityLib.Themes[TrinityLib.SelectedTheme][Name]
+			Object[ReturnProperty(Object)] = QuertzLib.Themes[QuertzLib.SelectedTheme][Name]
 		end    
 	end    
 end
@@ -213,23 +213,23 @@ end
 local function LoadCfg(Config)
 	local Data = HttpService:JSONDecode(Config)
 	table.foreach(Data, function(a,b)
-		if TrinityLib.Flags[a] then
+		if QuertzLib.Flags[a] then
 			spawn(function() 
-				if TrinityLib.Flags[a].Type == "Colorpicker" then
-					TrinityLib.Flags[a]:Set(UnpackColor(b))
+				if QuertzLib.Flags[a].Type == "Colorpicker" then
+					QuertzLib.Flags[a]:Set(UnpackColor(b))
 				else
-					TrinityLib.Flags[a]:Set(b)
+					QuertzLib.Flags[a]:Set(b)
 				end    
 			end)
 		else
-			warn("Trinity Library Config Loader - Could not find ", a ,b)
+			warn("Quertz Library Config Loader - Could not find ", a ,b)
 		end
 	end)
 end
 
 local function SaveCfg(Name)
 	local Data = {}
-	for i,v in pairs(TrinityLib.Flags) do
+	for i,v in pairs(QuertzLib.Flags) do
 		if v.Save then
 			if v.Type == "Colorpicker" then
 				Data[i] = PackColor(v.Value)
@@ -238,7 +238,7 @@ local function SaveCfg(Name)
 			end
 		end	
 	end
-	writefile(TrinityLib.Folder .. "/" .. Name .. ".txt", tostring(HttpService:JSONEncode(Data)))
+	writefile(QuertzLib.Folder .. "/" .. Name .. ".txt", tostring(HttpService:JSONEncode(Data)))
 end
 
 local WhitelistedMouse = {Enum.UserInputType.MouseButton1, Enum.UserInputType.MouseButton2,Enum.UserInputType.MouseButton3}
@@ -382,10 +382,10 @@ local NotificationHolder = SetProps(SetChildren(MakeElement("TFrame"), {
 	Position = UDim2.new(1, -25, 1, -25),
 	Size = UDim2.new(0, 300, 1, -25),
 	AnchorPoint = Vector2.new(1, 1),
-	Parent = Trinity
+	Parent = Quertz
 })
 
-function TrinityLib:MakeNotification(NotificationConfig)
+function QuertzLib:MakeNotification(NotificationConfig)
 	spawn(function()
 		NotificationConfig.Name = NotificationConfig.Name or "Notification"
 		NotificationConfig.Content = NotificationConfig.Content or "Test"
@@ -446,12 +446,12 @@ function TrinityLib:MakeNotification(NotificationConfig)
 	end)
 end    
 
-function TrinityLib:Init()
-	if TrinityLib.SaveCfg then	
+function QuertzLib:Init()
+	if QuertzLib.SaveCfg then	
 		pcall(function()
-			if isfile(TrinityLib.Folder .. "/" .. game.GameId .. ".txt") then
-				LoadCfg(readfile(TrinityLib.Folder .. "/" .. game.GameId .. ".txt"))
-				TrinityLib:MakeNotification({
+			if isfile(QuertzLib.Folder .. "/" .. game.GameId .. ".txt") then
+				LoadCfg(readfile(QuertzLib.Folder .. "/" .. game.GameId .. ".txt"))
+				QuertzLib:MakeNotification({
 					Name = "Configuration",
 					Content = "Auto-loaded configuration for the game " .. game.GameId .. ".",
 					Time = 5
@@ -461,27 +461,27 @@ function TrinityLib:Init()
 	end	
 end	
 
-function TrinityLib:MakeWindow(WindowConfig)
+function QuertzLib:MakeWindow(WindowConfig)
 	local FirstTab = true
 	local Minimized = false
 	local Loaded = false
 	local UIHidden = false
 
 	WindowConfig = WindowConfig or {}
-	WindowConfig.Name = WindowConfig.Name or "Trinity Library"
+	WindowConfig.Name = WindowConfig.Name or "Quertz Library"
 	WindowConfig.ConfigFolder = WindowConfig.ConfigFolder or WindowConfig.Name
 	WindowConfig.SaveConfig = WindowConfig.SaveConfig or false
 	WindowConfig.HidePremium = WindowConfig.HidePremium or false
 	if WindowConfig.IntroEnabled == nil then
 		WindowConfig.IntroEnabled = true
 	end
-	WindowConfig.IntroText = WindowConfig.IntroText or "Trinity Library"
+	WindowConfig.IntroText = WindowConfig.IntroText or "Quertz Library"
 	WindowConfig.CloseCallback = WindowConfig.CloseCallback or function() end
 	WindowConfig.ShowIcon = WindowConfig.ShowIcon or false
 	WindowConfig.Icon = WindowConfig.Icon or "rbxassetid://8834748103"
 	WindowConfig.IntroIcon = WindowConfig.IntroIcon or "rbxassetid://8834748103"
-	TrinityLib.Folder = WindowConfig.ConfigFolder
-	TrinityLib.SaveCfg = WindowConfig.SaveConfig
+	QuertzLib.Folder = WindowConfig.ConfigFolder
+	QuertzLib.SaveCfg = WindowConfig.SaveConfig
 
 	if WindowConfig.SaveConfig then
 		if not isfolder(WindowConfig.ConfigFolder) then
@@ -598,7 +598,7 @@ function TrinityLib:MakeWindow(WindowConfig)
 	}), "Stroke")
 
 	local MainWindow = AddThemeObject(SetChildren(SetProps(MakeElement("RoundFrame", Color3.fromRGB(255, 255, 255), 0, 10), {
-		Parent = Trinity,
+		Parent = Quertz,
 		Position = UDim2.new(0.5, -307, 0.5, -172),
 		Size = UDim2.new(0, 615, 0, 344),
 		ClipsDescendants = true
@@ -647,7 +647,7 @@ function TrinityLib:MakeWindow(WindowConfig)
 	AddConnection(CloseBtn.MouseButton1Up, function()
 		MainWindow.Visible = false
 		UIHidden = true
-		TrinityLib:MakeNotification({
+		QuertzLib:MakeNotification({
 			Name = "Interface Hidden",
 			Content = "Tap RightShift to reopen the interface",
 			Time = 5
@@ -684,7 +684,7 @@ function TrinityLib:MakeWindow(WindowConfig)
 	local function LoadSequence()
 		MainWindow.Visible = false
 		local LoadSequenceLogo = SetProps(MakeElement("Image", WindowConfig.IntroIcon), {
-			Parent = Trinity,
+			Parent = Quertz,
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.new(0.5, 0, 0.4, 0),
 			Size = UDim2.new(0, 28, 0, 28),
@@ -693,7 +693,7 @@ function TrinityLib:MakeWindow(WindowConfig)
 		})
 
 		local LoadSequenceText = SetProps(MakeElement("Label", WindowConfig.IntroText, 14), {
-			Parent = Trinity,
+			Parent = Quertz,
 			Size = UDim2.new(1, 0, 1, 0),
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.new(0.5, 19, 0.5, 0),
@@ -883,22 +883,22 @@ function TrinityLib:MakeWindow(WindowConfig)
 				}), "Second")
 
 				AddConnection(Click.MouseEnter, function()
-					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(TrinityLib.Themes[TrinityLib.SelectedTheme].Second.R * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.G * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(QuertzLib.Themes[QuertzLib.SelectedTheme].Second.R * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.G * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 				end)
 
 				AddConnection(Click.MouseLeave, function()
-					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = TrinityLib.Themes[TrinityLib.SelectedTheme].Second}):Play()
+					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = QuertzLib.Themes[QuertzLib.SelectedTheme].Second}):Play()
 				end)
 
 				AddConnection(Click.MouseButton1Up, function()
-					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(TrinityLib.Themes[TrinityLib.SelectedTheme].Second.R * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.G * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(QuertzLib.Themes[QuertzLib.SelectedTheme].Second.R * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.G * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 					spawn(function()
 						ButtonConfig.Callback()
 					end)
 				end)
 
 				AddConnection(Click.MouseButton1Down, function()
-					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(TrinityLib.Themes[TrinityLib.SelectedTheme].Second.R * 255 + 6, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.G * 255 + 6, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.B * 255 + 6)}):Play()
+					TweenService:Create(ButtonFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(QuertzLib.Themes[QuertzLib.SelectedTheme].Second.R * 255 + 6, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.G * 255 + 6, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.B * 255 + 6)}):Play()
 				end)
 
 				function Button:Set(ButtonText)
@@ -958,8 +958,8 @@ function TrinityLib:MakeWindow(WindowConfig)
 
 				function Toggle:Set(Value)
 					Toggle.Value = Value
-					TweenService:Create(ToggleBox, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Toggle.Value and ToggleConfig.Color or TrinityLib.Themes.Default.Divider}):Play()
-					TweenService:Create(ToggleBox.Stroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = Toggle.Value and ToggleConfig.Color or TrinityLib.Themes.Default.Stroke}):Play()
+					TweenService:Create(ToggleBox, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Toggle.Value and ToggleConfig.Color or QuertzLib.Themes.Default.Divider}):Play()
+					TweenService:Create(ToggleBox.Stroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = Toggle.Value and ToggleConfig.Color or QuertzLib.Themes.Default.Stroke}):Play()
 					TweenService:Create(ToggleBox.Ico, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {ImageTransparency = Toggle.Value and 0 or 1, Size = Toggle.Value and UDim2.new(0, 20, 0, 20) or UDim2.new(0, 8, 0, 8)}):Play()
 					ToggleConfig.Callback(Toggle.Value)
 				end    
@@ -967,25 +967,25 @@ function TrinityLib:MakeWindow(WindowConfig)
 				Toggle:Set(Toggle.Value)
 
 				AddConnection(Click.MouseEnter, function()
-					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(TrinityLib.Themes[TrinityLib.SelectedTheme].Second.R * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.G * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(QuertzLib.Themes[QuertzLib.SelectedTheme].Second.R * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.G * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 				end)
 
 				AddConnection(Click.MouseLeave, function()
-					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = TrinityLib.Themes[TrinityLib.SelectedTheme].Second}):Play()
+					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = QuertzLib.Themes[QuertzLib.SelectedTheme].Second}):Play()
 				end)
 
 				AddConnection(Click.MouseButton1Up, function()
-					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(TrinityLib.Themes[TrinityLib.SelectedTheme].Second.R * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.G * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(QuertzLib.Themes[QuertzLib.SelectedTheme].Second.R * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.G * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 					SaveCfg(game.GameId)
 					Toggle:Set(not Toggle.Value)
 				end)
 
 				AddConnection(Click.MouseButton1Down, function()
-					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(TrinityLib.Themes[TrinityLib.SelectedTheme].Second.R * 255 + 6, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.G * 255 + 6, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.B * 255 + 6)}):Play()
+					TweenService:Create(ToggleFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(QuertzLib.Themes[QuertzLib.SelectedTheme].Second.R * 255 + 6, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.G * 255 + 6, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.B * 255 + 6)}):Play()
 				end)
 
 				if ToggleConfig.Flag then
-					TrinityLib.Flags[ToggleConfig.Flag] = Toggle
+					QuertzLib.Flags[ToggleConfig.Flag] = Toggle
 				end	
 				return Toggle
 			end  
@@ -1080,7 +1080,7 @@ function TrinityLib:MakeWindow(WindowConfig)
 
 				Slider:Set(Slider.Value)
 				if SliderConfig.Flag then				
-					TrinityLib.Flags[SliderConfig.Flag] = Slider
+					QuertzLib.Flags[SliderConfig.Flag] = Slider
 				end
 				return Slider
 			end  
@@ -1235,7 +1235,7 @@ function TrinityLib:MakeWindow(WindowConfig)
 				Dropdown:Refresh(Dropdown.Options, false)
 				Dropdown:Set(Dropdown.Value)
 				if DropdownConfig.Flag then				
-					TrinityLib.Flags[DropdownConfig.Flag] = Dropdown
+					QuertzLib.Flags[DropdownConfig.Flag] = Dropdown
 				end
 				return Dropdown
 			end
@@ -1333,19 +1333,19 @@ function TrinityLib:MakeWindow(WindowConfig)
 				end)
 
 				AddConnection(Click.MouseEnter, function()
-					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(TrinityLib.Themes[TrinityLib.SelectedTheme].Second.R * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.G * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(QuertzLib.Themes[QuertzLib.SelectedTheme].Second.R * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.G * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 				end)
 
 				AddConnection(Click.MouseLeave, function()
-					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = TrinityLib.Themes[TrinityLib.SelectedTheme].Second}):Play()
+					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = QuertzLib.Themes[QuertzLib.SelectedTheme].Second}):Play()
 				end)
 
 				AddConnection(Click.MouseButton1Up, function()
-					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(TrinityLib.Themes[TrinityLib.SelectedTheme].Second.R * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.G * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(QuertzLib.Themes[QuertzLib.SelectedTheme].Second.R * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.G * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 				end)
 
 				AddConnection(Click.MouseButton1Down, function()
-					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(TrinityLib.Themes[TrinityLib.SelectedTheme].Second.R * 255 + 6, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.G * 255 + 6, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.B * 255 + 6)}):Play()
+					TweenService:Create(BindFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(QuertzLib.Themes[QuertzLib.SelectedTheme].Second.R * 255 + 6, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.G * 255 + 6, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.B * 255 + 6)}):Play()
 				end)
 
 				function Bind:Set(Key)
@@ -1357,7 +1357,7 @@ function TrinityLib:MakeWindow(WindowConfig)
 
 				Bind:Set(BindConfig.Default)
 				if BindConfig.Flag then				
-					TrinityLib.Flags[BindConfig.Flag] = Bind
+					QuertzLib.Flags[BindConfig.Flag] = Bind
 				end
 				return Bind
 			end  
@@ -1424,20 +1424,20 @@ function TrinityLib:MakeWindow(WindowConfig)
 				TextboxActual.Text = TextboxConfig.Default
 
 				AddConnection(Click.MouseEnter, function()
-					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(TrinityLib.Themes[TrinityLib.SelectedTheme].Second.R * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.G * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(QuertzLib.Themes[QuertzLib.SelectedTheme].Second.R * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.G * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 				end)
 
 				AddConnection(Click.MouseLeave, function()
-					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = TrinityLib.Themes[TrinityLib.SelectedTheme].Second}):Play()
+					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = QuertzLib.Themes[QuertzLib.SelectedTheme].Second}):Play()
 				end)
 
 				AddConnection(Click.MouseButton1Up, function()
-					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(TrinityLib.Themes[TrinityLib.SelectedTheme].Second.R * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.G * 255 + 3, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.B * 255 + 3)}):Play()
+					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(QuertzLib.Themes[QuertzLib.SelectedTheme].Second.R * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.G * 255 + 3, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.B * 255 + 3)}):Play()
 					TextboxActual:CaptureFocus()
 				end)
 
 				AddConnection(Click.MouseButton1Down, function()
-					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(TrinityLib.Themes[TrinityLib.SelectedTheme].Second.R * 255 + 6, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.G * 255 + 6, TrinityLib.Themes[TrinityLib.SelectedTheme].Second.B * 255 + 6)}):Play()
+					TweenService:Create(TextboxFrame, TweenInfo.new(0.25, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(QuertzLib.Themes[QuertzLib.SelectedTheme].Second.R * 255 + 6, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.G * 255 + 6, QuertzLib.Themes[QuertzLib.SelectedTheme].Second.B * 255 + 6)}):Play()
 				end)
 			end 
 			function ElementFunction:AddColorpicker(ColorpickerConfig)
@@ -1621,7 +1621,7 @@ function TrinityLib:MakeWindow(WindowConfig)
 
 				Colorpicker:Set(Colorpicker.Value)
 				if ColorpickerConfig.Flag then				
-					TrinityLib.Flags[ColorpickerConfig.Flag] = Colorpicker
+					QuertzLib.Flags[ColorpickerConfig.Flag] = Colorpicker
 				end
 				return Colorpicker
 			end  
@@ -1697,7 +1697,7 @@ function TrinityLib:MakeWindow(WindowConfig)
 					Position = UDim2.new(0, 150, 0, 112),
 					Font = Enum.Font.GothamBold
 				}), "Text"),
-				AddThemeObject(SetProps(MakeElement("Label", "This part of the script is locked to Sirius Premium users. Purchase Premium in the Discord server (discord.gg/sirius)", 12), {
+				AddThemeObject(SetProps(MakeElement("Label", "This part of the script is locked to Quertz Premium users. Purchase Premium in the Discord server (discord.gg/QuertzClient)", 12), {
 					Size = UDim2.new(1, -200, 0, 14),
 					Position = UDim2.new(0, 150, 0, 138),
 					TextWrapped = true,
@@ -1708,9 +1708,9 @@ function TrinityLib:MakeWindow(WindowConfig)
 		return ElementFunction   
 	end  
 	
-	TrinityLib:MakeNotification({
+	QuertzLib:MakeNotification({
 		Name = "UI Library Upgrade",
-		Content = "New UI Library Available at sirius.menu/discord and sirius.menu/rayfield",
+		Content = "New UI Library Available at QuertzClient Discord Server!",
 		Time = 5
 	})
 	
@@ -1719,8 +1719,8 @@ function TrinityLib:MakeWindow(WindowConfig)
 	return TabFunction
 end   
 
-function TrinityLib:Destroy()
-	Trinity:Destroy()
+function QuertzLib:Destroy()
+	Quertz:Destroy()
 end
 
-return TrinityLib
+return QuertzLib

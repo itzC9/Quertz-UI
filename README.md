@@ -1,46 +1,52 @@
-💡Kavo
-💫 Trinx/Trinity
-Trinity_Kavo Library
+💡 Kavo-UI Library
+💡 Kavo UI Library by xxHept
+🔮 Quertz-UI Library
+🔮 Quertz UI Library By itzYuki
 
-Trinity_Kavo UI Library by xHeptc and itzC9
-Powered by Github
-Kavo UI Library by xxHept and itzC9
-Documentation
+***⚡ Powered by GitHub***
 
-Update:
+# 📂 Documentation
+
+# 🗃️Updates:
 All of the latest updates may or can be found in here.
 
-Alert:
-All of those who gives template of Kavo is not a part of KavoTeam. big scams. please beware of using them because it may have a logger. this is the official Trinity_Kavo Library.
-You may use this Trinity_Kavo Ui Library because original Kavo was almost patched.
+# 🚨 Important:
+***All of those who gives template of Kavo is not a part of KavoTeam!***
+***they are big scams! please beware of using them because it may have a logger.***
+***this is the official Quertz x Kavo UI Library.***
+***You may use this Quertz-UI Library because original Kavo was Discontinued.***
 
-Added:
+# ***Latest Added:***
 ```
-Section Update Functions
-New Themes:
-   Mystic
-   Sunset
-   Forest
-   Royal
-   Flame
-   Moon
-   Sunrise
-   Kali
-New Component:
-   Label
-   Notification
-Rich Text Support For:
-UI Title,
-Sections,
-And Other Elements (exc tabs)
+# Section Update Functions
+***New Themes:***
+- Mystic [New]
+- Sunset [New]
+- Forest [New]
+- Royal [New]
+- Flame [New]
+- Moon [New]
+- Sunrise [New]
+- Kali [New]
+- Recommend More (@itzC9#0000)
+
+***New Component:***
+- Label
+- Notification
+- recommend more (discord.gg/QuertzClient)
+
+***Rich Text Support For:***
+- UI Title,
+- Sections,
+- And Other Elements (exc tabs)
 ```
 Getting Loadstring
 ```lua
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/itzC9/Trinx-Kavo-UI/main/trinx.lua"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/itzC9/Trinx-Kavo-UI/main/tQuertz.lua"))()
 ```
 Creating UI Library Window
 ```lua
-local Window = Library.MakeLib("TITLE", "DarkTheme")
+local Window = Library.MakeLib("TITLE", "Theme")
 ```
 Themes:
 ```
@@ -67,11 +73,11 @@ local Tab = Window:MakeTab("TabName")
 ```
 Creating Section
 ```lua
-local Section = Tab:AddSection("Section Name")
+local Section = Tab:AddSection("SectionName")
 ```
 Update Section
 ```lua
-Section:UpdateSection("Section New Title")
+Section:UpdateSection("SectionNewTitle")
 ```
 Creating Labels
 ```lua
@@ -90,7 +96,7 @@ end)
 Update Button
 Make sure your button is local when updating it.
 ```lua
-button:UpdateButton("New Text")
+button:UpdateButton("NewText")
 ```
 Creating Toggles
 ```lua
@@ -133,11 +139,11 @@ end)
 
 Default Notification
 ```lua
-Section:MakeNotification(" Title ", "WASSUP THIS IS DESCRIPTION!")
+Section:MakeNotification("Title", "WASSUP THIS IS DESCRIPTION!")
 ```
-Modified Notification
+Timer Notification
 ```lua
-Section:MakeNotification(" Title ", "WASSUP THIS IS DESCRIPTION!", 5)
+Section:MakeNotification("Title", "WASSUP THIS IS DESCRIPTION!", 5)
 ```
 Creating Keybinds
 ```lua
@@ -145,7 +151,7 @@ Section:NewKeybind("KeybindText", "KeybindInfo", Enum.KeyCode.F, function()
 	print("You just clicked the bind")
 end)
 ```
-Toggling UI with Keybinds
+Toggling UI with Keybinds (Useful on Open and Close Button)
 ```lua
 Section:AddKeybind("KeybindText", "KeybindInfo", Enum.KeyCode.F, function()
 	Library:ToggleUI()
@@ -200,7 +206,6 @@ local Window = Library.MakeLib("TITLE", colors)
 ```
 Want to add fully customizable UI?
 Add this code in your section. This will create color pickers.
-
 Make sure you have added table with all the values of UI. then apply it to window. Like shown above.
 ```lua
 for theme, color in pairs(themes) do
