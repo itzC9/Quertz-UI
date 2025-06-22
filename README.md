@@ -174,12 +174,12 @@ end)
 Dropdown Refresh
 ```lua
 local oldList = {
-  "2019",
-  "2020"
+  "2022",
+  "2023"
 }
 local newList = {
-  "2021",
-  "2022"
+  "2024",
+  "2025"
 }
 local dropdown = Section:NewDropdown("Dropdown","Info", oldList, function()
 
@@ -222,4 +222,6 @@ for theme, color in pairs(themes) do
     end)
 end
 ```
-Last updated Friday, July 19 2024 Philippines Standard Time.
+** Previous updates Friday, July 19 2024 Philippines Standard Time. **
+# ----------
+** Last updated Saturday, June 21 2025 Philippines Standard Time. **
